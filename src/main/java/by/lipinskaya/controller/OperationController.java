@@ -28,13 +28,13 @@ public class OperationController {
     //    return rp.findAll();
     //}
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView getLogin() {
-        ModelAndView modelAndView = new ModelAndView("../../index");
-        modelAndView.addObject("message", " ALENA");
+    //@RequestMapping(value = "/", method = RequestMethod.GET)
+    //public ModelAndView getLogin() {
+     //   ModelAndView modelAndView = new ModelAndView("../../index");
+     //   modelAndView.addObject("message", " ALENA");
 
-        return modelAndView;
-    }
+      //  return modelAndView;
+    //}
 
     @RequestMapping(value = "/operation/new", method = RequestMethod.POST)
     public ModelAndView newOperation(@ModelAttribute("operation") Operation operation, HttpServletRequest request) {

@@ -24,16 +24,19 @@ public class Operation implements Serializable {
     private float amount_income;
 
     @Column(name = "job_availability")
-    private String job_availability;
+    private int job_availability;
 
     @Column(name = "benefits_availability")
-    private String benefits_availability;
+    private int benefits_availability;
 
     @Column(name = "lonely")
-    private String lonely;
+    private int lonely;
+
+    @Column(name = "number_child")
+    private int number_child;
 
     @Column(name = "number_child_invalid")
-    private String number_child_invalid;
+    private int number_child_invalid;
 
     @Column(name = "number_dependent")
     private int number_dependent;
@@ -85,35 +88,43 @@ public class Operation implements Serializable {
         this.amount_income = amount_income;
     }
 
-    public String getJob_availability() {
+    public int getJob_availability() {
         return job_availability;
     }
 
-    public void setJob_availability(String job_availability) {
+    public void setJob_availability(int job_availability) {
         this.job_availability = job_availability;
     }
 
-    public String getBenefits_availability() {
+    public int getBenefits_availability() {
         return benefits_availability;
     }
 
-    public void setBenefits_availability(String benefits_availability) {
+    public void setBenefits_availability(int benefits_availability) {
         this.benefits_availability = benefits_availability;
     }
 
-    public String getLonely() {
+    public int getLonely() {
         return lonely;
     }
 
-    public void setLonely(String lonely) {
+    public void setLonely(int lonely) {
         this.lonely = lonely;
     }
 
-    public String getNumber_child_invalid() {
+    public int getNumber_child() {
+        return number_child;
+    }
+
+    public void setNumber_child(int number_child) {
+        this.number_child = number_child;
+    }
+
+    public int getNumber_child_invalid() {
         return number_child_invalid;
     }
 
-    public void setNumber_child_invalid(String number_child_invalid) {
+    public void setNumber_child_invalid(int number_child_invalid) {
         this.number_child_invalid = number_child_invalid;
     }
 
@@ -164,4 +175,5 @@ public class Operation implements Serializable {
     public void setResult(float result) {
         this.result = result;
     }
+
 }
