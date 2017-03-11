@@ -28,27 +28,24 @@ public class OperationController {
     //    return rp.findAll();
     //}
 
-    //@RequestMapping(value = "/", method = RequestMethod.GET)
-    //public ModelAndView getLogin() {
-     //   ModelAndView modelAndView = new ModelAndView("../../index");
-     //   modelAndView.addObject("message", " ALENA");
-
-      //  return modelAndView;
-    //}
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView start() {
+        ModelAndView modelAndView = new ModelAndView("../../index");
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/operation/new", method = RequestMethod.POST)
     public ModelAndView newOperation(@ModelAttribute("operation") Operation operation, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("../../index");
-        modelAndView.addObject("message", " ALENA");
 
         return modelAndView;
     }
 
+
+
     @RequestMapping(value="/calculator", method = RequestMethod.GET)
-    public ModelAndView calculator() {
+    public ModelAndView startCalculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
-        modelAndView.addObject("message","ALENA!!");
-        System.out.println("MESSSAGE!!!");
         return modelAndView;
     }
 
