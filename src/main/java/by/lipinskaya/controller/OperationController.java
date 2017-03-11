@@ -1,7 +1,9 @@
 package by.lipinskaya.controller;
 
+import by.lipinskaya.model.Operation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +30,14 @@ public class OperationController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView getLogin() {
+        ModelAndView modelAndView = new ModelAndView("../../index");
+        modelAndView.addObject("message", " ALENA");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/operation/new", method = RequestMethod.POST)
+    public ModelAndView newOperation(@ModelAttribute("operation") Operation operation, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("../../index");
         modelAndView.addObject("message", " ALENA");
 

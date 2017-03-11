@@ -15,6 +15,7 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:resources mapping="/webjars/**" location="/webjars/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/" />
