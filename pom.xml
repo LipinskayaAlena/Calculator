@@ -23,11 +23,6 @@
         <mysql.version>5.1.34</mysql.version>
     </properties>
 
-    <!--<properties>-->
-    <!--<jdbc.url>jdbc:mysql://localhost:3306/UN?useUnicode=true&amp;characterEncoding=UTF-8</jdbc.url>-->
-    <!--<jdbc.user>root</jdbc.user>-->
-    <!--<jdbc.password>root</jdbc.password>-->
-    <!--</properties>-->
 
     <dependencies>
         <dependency>
