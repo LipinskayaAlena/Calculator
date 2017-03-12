@@ -15,18 +15,11 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Asus on 10.03.2017.
  */
 
-//@RestController
-//@RequestMapping("/operation")
 @Controller
 public class OperationController {
     //@Autowired
     ///OperationRepository rp;
 
-    //@RequestMapping("/findall")
-    //@ResponseBody
-    //public List<Operation> findall() {
-    //    return rp.findAll();
-    //}
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView start() {
@@ -42,7 +35,6 @@ public class OperationController {
     }
 
 
-
     @RequestMapping(value="/calculator", method = RequestMethod.GET)
     public ModelAndView startCalculator() {
         ModelAndView modelAndView = new ModelAndView("calculator");
@@ -51,9 +43,4 @@ public class OperationController {
 
 
 
-    //@RequestMapping("/calculator")
-    //public String calculator(Map<String, Object> model) {
-    //    model.put("message", " ALENA");
-    //    return "calculator";
-    //}
 }
