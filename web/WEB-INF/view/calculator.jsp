@@ -28,7 +28,7 @@
     <form>
         <p>
         Период, за который производится расчет:
-        <select title="Квартал" id="scope" v-model="operation.period">
+        <select value="{{operation.period}}" title="Квартал" id="scope" v-model="operation.period">
             <option selected="selected" value="3">Квартал</option>
             <option value="6">Полугодие</option>
             <option value="9">Девять месяцев</option>
@@ -39,12 +39,12 @@
         Сумма выручки от реализации товаров (работ, услуг),
         имущественных прав за выбранный период
         (без налога на добавленную стоимость), руб.
-        <input type="number" step="any" v-model="operation.amount_receipts"><br />
+        <input value="{{operation.amount_receipts}}" type="number" step="any" v-model="operation.amount_receipts"><br />
         </p>
         <p>
         Сумма внереализационных доходов за выбранный период
         (без налога на добавленную стоимость), руб.
-        <input type="number" step="any" v-model="operation.amount_income"><br />
+        <input value="{{operation.amount_income}}" type="number" step="any" v-model="operation.amount_income"><br />
         </p>
         <p>
         Наличие места основной работы:
@@ -70,7 +70,7 @@
                 Количество детей до 18 лет,
                 из них количество детей-инвалидов
                 <label>{{num_child}}</label>
-                <input type="number" onkeypress="isNumberKey(event)" id="number_child" v-model="operation.number_child">
+                <input type="number" value="0" onkeypress="isNumberKey(event)" id="number_child" v-model="operation.number_child">
                 <input type="number" value="{{operation.number_child_invalid}}" onkeypress="isNumberKey(event)" @keyup="check_child()" id="number_child_invalid" v-model="operation.number_child_invalid"><br />
             </p>
             <p>
@@ -81,25 +81,25 @@
                 Сумма расходов за выбранный период по страховым взносам по договорам добровольного страхования жизни и дополнительной пенсии, заключенным
                 на срок не менее трех лет, а также по договорам добровольного
                 страхования медицинских расходов, руб.
-                <input type="number" step="any" v-model="operation.amount_contribution"><br />
+                <input type="number" value="0" step="any" v-model="operation.amount_contribution"><br />
             </p>
             <p>
                 Сумма расходов за выбранный период на
                 получение первого платного образования своего либо
                 близких родственников, руб.
-                <input type="number" step="any" v-model="operation.amount_education"><br />
+                <input type="number" value="0" step="any" v-model="operation.amount_education"><br />
             </p>
             <p>
                 Сумма расходов за выбранный период на строительство либо приобретение жилья
                 для нуждающихся в улучшении жилищных условий, руб.
-                <input type="number" step="any" v-model="operation.amount_building"><br />
+                <input type="number" value="0" step="any" v-model="operation.amount_building"><br />
             </p>
         </div>
 
         <p>
         Сумма расходов за выбранный период, связанных с осуществлением
         предпринимательской деятельности, руб.
-        <input type="number" step="any" v-model="operation.amount_entrepreneurial_activity"><br />
+        <input type="number" value="0" step="any" v-model="operation.amount_entrepreneurial_activity"><br />
         </p>
         <div v-show="show_result">
                 РЕЗУЛЬТАТ: <p>
@@ -132,7 +132,21 @@
         template: '#calculator-template',
         data:function(){
             return {
-                operation:{},
+                operation:{
+                    period:3,
+                    amount_receipts:0,
+                    amount_income:0,
+                    job_availability:0,
+                    benefits_availability:1,
+                    lonely: 0,
+                    number_child: 0,
+                    number_child_invalid: 0,
+                    dependent: 0,
+                    amount_contribution: 0,
+                    amount_education:0,
+                    amount_building:0,
+                    amount_entrepreneurial_activity: 0
+                },
                 show: true,
                 show_result: false
             };
@@ -151,8 +165,6 @@
                 var number_child_invalid = document.getElementById("number_child_invalid").value;
                 if (number_child_invalid > number_child) {
                     var n = parseInt(number_child_invalid.charAt(number_child_invalid.length - 1));
-                    alert(n);
-                    alert(number_child_invalid - n / 10);
                     this.operation.number_child_invalid = (number_child_invalid - n) / 10;
                 }
             }
