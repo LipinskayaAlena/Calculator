@@ -9,103 +9,143 @@
 <html>
 <head>
     <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/calculator_style.css"/>
 </head>
 <body>
 
 
 <div id="app">
-    <h2 align = "center">КАЛЬКУЛЯТОР РАСЧЕТА ПОДОХОДНОГО НАЛОГА
-        С ФИЗИЧЕСКИХ ЛИЦ
-        ЗА 2016 г.
-        (для индивидуальных предпринимателей)
-    </h2>
-    <calculator style="margin: 0 auto; width: 800px"> </calculator>
+
+    <calculator style=" width: 800px">
+
+    </calculator>
 
 </div>
 
 
 <template id="calculator-template">
     <form>
-        <p>
-        Период, за который производится расчет:
+        <h2 align = "center">КАЛЬКУЛЯТОР РАСЧЕТА ПОДОХОДНОГО НАЛОГА
+            С ФИЗИЧЕСКИХ ЛИЦ
+            ЗА 2016 г.
+            (для индивидуальных предпринимателей)
+        </h2>
+        <div>
+        <label>Период, за который производится расчет:</label>
         <select value="{{operation.period}}" title="Квартал" id="scope" v-model="operation.period">
             <option selected="selected" value="3">Квартал</option>
             <option value="6">Полугодие</option>
             <option value="9">Девять месяцев</option>
             <option value="12">Год</option>
-        </select><br />
-        </p>
-        <p>
-        Сумма выручки от реализации товаров (работ, услуг),
-        имущественных прав за выбранный период
-        (без налога на добавленную стоимость), руб.
-        <input value="{{operation.amount_receipts}}" type="number" step="any" v-model="operation.amount_receipts"><br />
-        </p>
-        <p>
-        Сумма внереализационных доходов за выбранный период
-        (без налога на добавленную стоимость), руб.
-        <input value="{{operation.amount_income}}" type="number" step="any" v-model="operation.amount_income"><br />
-        </p>
-        <p>
-        Наличие места основной работы:
-        <input type="radio" v-model="operation.job_availability" value="1" @click="show=false"> да
-        <input type="radio" v-model="operation.job_availability" value="0" @click="show=true"> нет<br />
-        </p>
-
-        <div v-show="show">
-            <p>
-                Наличие права на льготы (инвалид I или II группы, инвалид с детства,
-                участник боевых действий на территории других государств и др.):
-                <input type="radio" v-model="operation.benefits_availability" name="benefits_availability" value="1"> да
-                <input type="radio" v-model="operation.benefits_availability" name="benefits_availability" value="0"> нет<br />
-            </p>
-            <p>
-                Являетесь ли Вы вдовой (вдовцом),
-                одиноким родителем, приемным родителем,
-                опекуном или попечителем:
-                <input type="radio" v-model="operation.lonely" name="lonely" value="1"> да
-                <input type="radio" v-model="operation.lonely" name="lonely" value="0"> нет<br />
-            </p>
-            <p>
-                Количество детей до 18 лет,
-                из них количество детей-инвалидов
-                <label>{{num_child}}</label>
-                <input type="number" value="0" onkeypress="isNumberKey(event)" id="number_child" v-model="operation.number_child">
-                <input type="number" value="{{operation.number_child_invalid}}" onkeypress="isNumberKey(event)" @keyup="check_child()" id="number_child_invalid" v-model="operation.number_child_invalid"><br />
-            </p>
-            <p>
-                Количество иждивенцев
-                <input type="number" onkeypress="isNumberKey(event)" v-model="operation.dependent"><br />
-            </p>
-            <p>
-                Сумма расходов за выбранный период по страховым взносам по договорам добровольного страхования жизни и дополнительной пенсии, заключенным
-                на срок не менее трех лет, а также по договорам добровольного
-                страхования медицинских расходов, руб.
-                <input type="number" value="0" step="any" v-model="operation.amount_contribution"><br />
-            </p>
-            <p>
-                Сумма расходов за выбранный период на
-                получение первого платного образования своего либо
-                близких родственников, руб.
-                <input type="number" value="0" step="any" v-model="operation.amount_education"><br />
-            </p>
-            <p>
-                Сумма расходов за выбранный период на строительство либо приобретение жилья
-                для нуждающихся в улучшении жилищных условий, руб.
-                <input type="number" value="0" step="any" v-model="operation.amount_building"><br />
-            </p>
+        </select>
+        </div>
+        <div>
+            <label>
+                Сумма выручки от реализации товаров (работ, услуг),
+                имущественных прав за выбранный период
+                (без налога на добавленную стоимость), руб.
+            </label>
+            <input value="{{operation.amount_receipts}}" type="number" step="any" v-model="operation.amount_receipts">
+        </div>
+        <div>
+            <label>
+                Сумма внереализационных доходов за выбранный период
+                (без налога на добавленную стоимость), руб.
+            </label>
+            <input value="{{operation.amount_income}}" type="number" step="any" v-model="operation.amount_income">
+        </div>
+        <div>
+            <label>Наличие места основной работы:</label>
+            <ul>
+                <li>
+                    <label>
+                        <input type="radio" v-model="operation.job_availability" value="1" @click="show=false">да
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" v-model="operation.job_availability" value="0" @click="show=true">нет
+                    </label>
+                </li>
+            </ul>
         </div>
 
-        <p>
-        Сумма расходов за выбранный период, связанных с осуществлением
-        предпринимательской деятельности, руб.
+        <div v-show="show">
+            <div>
+                <label>Наличие права на льготы (инвалид I или II группы, инвалид с детства,
+                участник боевых действий на территории других государств и др.):
+                </label>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="radio" v-model="operation.benefits_availability" name="benefits_availability" value="1">да
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" v-model="operation.benefits_availability" name="benefits_availability" value="0">нет
+                        </label>
+                    </li>
+                </ul>
+
+            </div>
+            <div>
+                <label>Являетесь ли Вы вдовой (вдовцом),
+                одиноким родителем, приемным родителем,
+                опекуном или попечителем:</label>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="radio" v-model="operation.lonely" name="lonely" value="1">да
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" v-model="operation.lonely" name="lonely" value="0">нет
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <label>Количество детей до 18 лет,
+                из них количество детей-инвалидов</label>
+                <input type="number" value="0" onkeypress="isNumberKey(event)" id="number_child" v-model="operation.number_child">
+                <input type="number" value="{{operation.number_child_invalid}}" onkeypress="isNumberKey(event)" @keyup="check_child()" id="number_child_invalid" v-model="operation.number_child_invalid">
+
+            </div>
+            <div>
+                <label>Количество иждивенцев</label>
+                <input type="number" onkeypress="isNumberKey(event)" v-model="operation.dependent">
+            </div>
+            <div>
+                <label>Сумма расходов за выбранный период по страховым взносам по договорам добровольного страхования жизни и дополнительной пенсии, заключенным
+                на срок не менее трех лет, а также по договорам добровольного
+                страхования медицинских расходов, руб.</label>
+                <input type="number" value="0" step="any" v-model="operation.amount_contribution">
+            </div>
+            <div>
+                <label>Сумма расходов за выбранный период на
+                получение первого платного образования своего либо
+                близких родственников, руб.</label>
+                <input type="number" value="0" step="any" v-model="operation.amount_education">
+            </div>
+            <div>
+                <label>Сумма расходов за выбранный период на строительство либо приобретение жилья
+                для нуждающихся в улучшении жилищных условий, руб.</label>
+                <input type="number" value="0" step="any" v-model="operation.amount_building"><br />
+            </div>
+        </div>
+
+        <div>
+        <label>Сумма расходов за выбранный период, связанных с осуществлением
+        предпринимательской деятельности,</label>
         <input type="number" value="0" step="any" v-model="operation.amount_entrepreneurial_activity"><br />
-        </p>
+        </div>
         <div v-show="show_result">
                 РЕЗУЛЬТАТ: <p>
                 <h3 style="width: 90%">{{ operation.result }}</h3>
         </div>
-        <div class="form-actions">
+        <div>
             <button type="button" @click="calculate">Рассчитать</button>
         </div>
     </form>

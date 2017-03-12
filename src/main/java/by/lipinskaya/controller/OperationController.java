@@ -34,10 +34,11 @@ public class OperationController {
     @RequestMapping(value = "/operation/new", method = RequestMethod.POST)
     @ResponseBody
     public Operation newOperation(@ModelAttribute("operation") Operation operation, HttpServletRequest request) {
-        boolean step0 = (operation.getAmount_receipts() + operation.getAmount_income()) <= operation.getAmount_entrepreneurial_activity();
+        boolean step0 = (operation.getAmount_receipts() + operation.getAmount_income()) >= operation.getAmount_entrepreneurial_activity();
         if (operation.getJob_availability() == 1 && step0) {
             float result = (operation.getAmount_receipts() + operation.getAmount_income() - operation.getAmount_entrepreneurial_activity()) * 0.16f;
             operation.setResult(result);
+            operationService.addOperation(operation);
 
         } else if (operation.getJob_availability() == 0 && step0) {
             float step1, step2, step3, step4 = 0, step5, step6, result = 0;
@@ -85,6 +86,7 @@ public class OperationController {
             //7 step
             result = step6 * 0.16f;
             operation.setResult(result);
+            operationService.addOperation(operation);
         }
 //    шаг второй:
 //    если (ш1-стр.13)<=15020000, то ш1-(830000х«период расчета»)=ш2
@@ -96,7 +98,7 @@ public class OperationController {
 //    если ш3<0, то ш3=0
 
 
-        operationService.addOperation(operation);
+
         //request.("operation",operation);
         //request.setAttribute("operation", operation);
         return operation;
