@@ -29,6 +29,11 @@ public class OperationController {
 
     @RequestMapping(value = "/operation/new", method = RequestMethod.POST)
     public ModelAndView newOperation(@ModelAttribute("operation") Operation operation, HttpServletRequest request) {
+        if(operation.getJob_availability() == 1) {
+            float result = (operation.getAmount_receipts() + operation.getAmount_income() - operation.getAmount_entrepreneurial_activity()) * 0.16f;
+            operation.setResult(result);
+        }
+
         ModelAndView modelAndView = new ModelAndView("../../index");
 
         return modelAndView;
