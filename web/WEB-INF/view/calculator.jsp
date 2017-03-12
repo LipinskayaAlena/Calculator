@@ -69,8 +69,9 @@
             <p>
                 Количество детей до 18 лет,
                 из них количество детей-инвалидов
-                <input type="number" onkeypress="isNumberKey(event)" v-model="operation.number_child">
-                <input type="number" onkeypress="isNumberKey(event)" v-model="operation.number_child_invalid"><br />
+                <label>{{num_child}}</label>
+                <input type="number" onkeypress="isNumberKey(event)" id="number_child" v-model="operation.number_child">
+                <input type="number" value="{{operation.number_child_invalid}}" onkeypress="isNumberKey(event)" @keyup="check_child()" id="number_child_invalid" v-model="operation.number_child_invalid"><br />
             </p>
             <p>
                 Количество иждивенцев
@@ -100,12 +101,12 @@
         предпринимательской деятельности, руб.
         <input type="number" step="any" v-model="operation.amount_entrepreneurial_activity"><br />
         </p>
-        <p>
-        Результат
-        <textarea v-model="operation.result" style="height: 50px;width: 90%"></textarea>
-        </p>
+        <div v-show="show_result">
+                РЕЗУЛЬТАТ: <p>
+                <h3 style="width: 90%">{{ operation.result }}</h3>
+        </div>
         <div class="form-actions">
-            <button type="button" v-on:click="calculate">Рассчитать</button>
+            <button type="button" @click="calculate">Рассчитать</button>
         </div>
     </form>
 </template>
@@ -115,11 +116,14 @@
 <script src="../../static/js/vue-resource.min.js"></script>
 <script>
     function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which:event.keyCode
+        var charCode = (evt.which) ? evt.which:event.keyCode;
+
         if(charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
+
     }
+
 </script>
 <script>
     Vue.http.options.emulateJSON = true;
@@ -129,18 +133,30 @@
         data:function(){
             return {
                 operation:{},
-                show: true
+                show: true,
+                show_result: false
             };
         },
-
         methods: {
             calculate: function () {
                 this.$http.post("/operation/new",this.operation).then(function(response) {
-                    alert('success ');
+                    this.operation = response.data;
+                    this.show_result = true;
                 }, function(error){
                     alert('error ');
                 });
+            },
+            check_child: function () {
+                var number_child = document.getElementById("number_child").value;
+                var number_child_invalid = document.getElementById("number_child_invalid").value;
+                if (number_child_invalid > number_child) {
+                    var n = parseInt(number_child_invalid.charAt(number_child_invalid.length - 1));
+                    alert(n);
+                    alert(number_child_invalid - n / 10);
+                    this.operation.number_child_invalid = (number_child_invalid - n) / 10;
+                }
             }
+
         }
     });
 
