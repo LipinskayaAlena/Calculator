@@ -30,6 +30,13 @@ label {
     width: 500px;
 }
 
+table{
+    font-family:arial;
+    font-size: 10px;
+}
+
+
+
 input,select,textarea {
     display: inline-block;
     width: 250px;

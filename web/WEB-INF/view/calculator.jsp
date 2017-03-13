@@ -138,7 +138,7 @@
 
         <div style="text-align: left">
             <label>Сумма расходов за выбранный период, связанных с осуществлением
-                предпринимательской деятельности,</label>
+                предпринимательской деятельности, руб.</label>
             <input type="number" step="any" v-model="operation.amount_entrepreneurial_activity"><br />
         </div>
         <div style="text-align: left" v-show="show_result">
@@ -153,43 +153,102 @@
     </form>
 </script>
 
-<script type="vue/template" id="operationsTemplate">
-    <table>
-        <thead>
+<script type="vue/template" id="operationsTemplate" style="text-align: left; width: 800px">
+    <form>
+        <table>
+            <thead>
             <tr>
                 <th>
-                    Период, за который производится расчет:
+                    Период
                 </th>
                 <th>
-                    Сумма выручки от реализации товаров (работ, услуг),
-                    имущественных прав за выбранный период
-                    (без налога на добавленную стоимость), руб.
+                    Выручка от реализации товаров (работ, услуг), руб.
                 </th>
                 <th>
-                    Сумма внереализационных доходов за выбранный период
-                    (без налога на добавленную стоимость), руб.
+                    Внереализационных доходов, руб.
                 </th>
                 <th>
-                    Наличие места основной работы
+                    Основная работа
+                </th>
+                <th>
+                    Наличие права на льготы
+                </th>
+                <th>
+                    Вдова(вдовец),
+                    одинокий родитель,приемный родитель,
+                    опекун/попечитель
+                </th>
+                <th>
+                    Количество детей до 18 лет/детей-инвалидов
+                </th>
+                <th>
+                    Количество иждивенцев
+                </th>
+                <th>
+                    Расходы по страховым взносам, руб
+                </th>
+                <th>
+                    Расходы на получение первого платного образования, руб.
+                </th>
+                <th>
+                    Расходы на строительство/приобретение жилья, руб
+                </th>
+                <th>
+                    Расходы, связанных с предпринимательской деятельностью, руб
                 </th>
                 <th>
                     Результат
                 </th>
             </tr>
 
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <template v-for="operation in operations">
                 <tr>
-                    <td>{{ operation.period }}</td>
+                    <td v-if=" operation.period == 3">
+                        Квартал
+                    </td>
+                    <td v-if="operation.period == 6">
+                        Полугодие
+                    </td>
+                    <td v-if="operation.period == 9">
+                        Девять месяцев
+                    </td>
+                    <td v-if="operation.period == 12">
+                        Год
+                    </td>
                     <td>{{ operation.amount_receipts }}</td>
                     <td>{{ operation.amount_income }}</td>
-                    <td>{{ operation.job_availability }}</td>
+                    <td v-if="operation.job_availability == 1">
+                        да
+                    </td>
+                    <td v-if="operation.job_availability == 0">
+                        нет
+                    </td>
+                    <td v-if="operation.benefits_availability == 1">
+                        да
+                    </td>
+                    <td v-if="operation.benefits_availability == 0">
+                        нет
+                    </td>
+                    <td v-if="operation.lonely == 1">
+                        да
+                    </td>
+                    <td v-if="operation.lonely == 0">
+                        нет
+                    </td>
+                    <td>{{ operation.number_child }}/{{ operation.number_child_invalid }}</td>
+                    <td>{{ operation.number_dependent }}</td>
+                    <td>{{ operation.amount_contribution }}</td>
+                    <td>{{ operation.amount_education}}</td>
+                    <td>{{ operation.amount_building }}</td>
+                    <td>{{ operation.amount_entrepreneurial_activity }}</td>
                     <td>{{ operation.result }}</td>
                 </tr>
             </template>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </form>
 </script>
 
 <script>
@@ -211,7 +270,6 @@
     var Operation = Vue.extend({
         template:'#operationsTemplate',
         data:function() {
-
             this.$http.get("/operation").then(function(response){
                 this.operations = response.data;
             });
