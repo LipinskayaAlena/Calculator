@@ -30,9 +30,20 @@ label {
     width: 500px;
 }
 
-table{
+th {
+    /*background: #цветфона*/
+    text-align:left;
+    height: 40px; /*высота ячеек*/
+    vertical-align:bottom; /*выравнивание по нижнему краю*/
+    padding: 0; /*поля вокруг текста*/
+    text-size: 25px;
+}
+td {
+    text-align:center;
     font-family:arial;
-    font-size: 10px;
+    font-size: 15px;
+    font-color: #b6daff;
+    text-align: center;
 }
 
 
