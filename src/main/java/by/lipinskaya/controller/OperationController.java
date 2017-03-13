@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Asus on 10.03.2017.
@@ -105,13 +107,19 @@ public class OperationController {
     }
 
 
-    @RequestMapping(value = "/calculator", method = RequestMethod.GET)
-    public ModelAndView startCalculator() {
-        ModelAndView modelAndView = new ModelAndView("calculator");
-        return modelAndView;
+    @RequestMapping(value = "/calculator")
+    public String startCalculator() {
+        return "calculator";
     }
 
+    @RequestMapping(value = "/operation", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Operation> newOperation(HttpServletRequest request) {
+        List<Operation> operations = new ArrayList<Operation>();
+        operations = operationService.getAllOperations();
 
+        return operations;
+    }
 
 
 
