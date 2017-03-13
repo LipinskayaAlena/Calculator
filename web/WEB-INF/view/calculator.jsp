@@ -147,7 +147,7 @@
             <h3 style="width: 90%">{{ operation.result }}</h3>
         </div>
         <div style="text-align: left">
-            <label><button type="button">Все операции</button></label>
+            <label><button type="button" @click="all_operations">Все операции</button></label>
             <button type="button" @click="calculate">Рассчитать</button>
         </div>
     </form>
@@ -211,12 +211,13 @@
     var Operation = Vue.extend({
         template:'#operationsTemplate',
         data:function() {
-            alert('OPERATIONS COMPONENT');
+
             this.$http.get("/operation").then(function(response){
                 this.operations = response.data;
-                alert('OPERATIONS');
-                alert(operations[0].period);
             });
+            return{
+                operations:[]
+            }
         }
     });
 
@@ -225,7 +226,7 @@
         data:function(){
             return {
                 operation:{
-                    period:6,
+                    period:3,
                     amount_receipts:0,
                     amount_income:0,
                     job_availability:0,
@@ -260,6 +261,10 @@
                     var n = parseInt(number_child_invalid.charAt(number_child_invalid.length - 1));
                     this.operation.number_child_invalid = (number_child_invalid - n) / 10;
                 }
+            },
+            all_operations: function () {
+                alert("go");
+                this.$router.push("/operation");
             }
 
         }
