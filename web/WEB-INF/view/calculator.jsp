@@ -204,12 +204,12 @@
             </tr>
             <tr>
                 <th>
-                    <input type="text" id="find_by_period" :value="find_by_period" v-model="find_by_period" style="width:15px"/>
+                    <input type="text" id="find_by_period" :value="find_by_period" v-model="find_by_period" style="width:50px"/>
                 </th>
                 <th></th>
                 <th></th>
                 <th>
-                    <select id="find_by_work" onchange="change(this)" :value="find_by_work" v-model="find_by_work" style="width:10px ;">
+                    <select id="find_by_work" onchange="change(this)" :value="find_by_work" v-model="find_by_work" style="width:53px ;">
                         <option selected value="-1"></option>
                         <option value="1">да</option>
                         <option value="0">нет</option>

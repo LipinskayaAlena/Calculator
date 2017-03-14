@@ -90,19 +90,6 @@ public class OperationController {
             operation.setResult(result);
             operationService.addOperation(operation);
         }
-//    шаг второй:
-//    если (ш1-стр.13)<=15020000, то ш1-(830000х«период расчета»)=ш2
-//    если (ш1-стр.13)>15020000, то ш2=ш1
-//    если ш2<0, то ш2=0
-//    шаг третий:
-//    если по строке 5 выбран вариант (а), то                                                                           ш2-(1170000х«период расчета»)=ш3,
-//    если по строке 5 выбран вариант (б), то ш3=ш2
-//    если ш3<0, то ш3=0
-
-
-
-        //request.("operation",operation);
-        //request.setAttribute("operation", operation);
         return operation;
     }
 
