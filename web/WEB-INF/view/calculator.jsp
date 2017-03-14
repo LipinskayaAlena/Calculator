@@ -155,6 +155,13 @@
 
 <script type="vue/template" id="operationsTemplate" style="text-align: left; width: 800px">
     <form>
+        <h2 align="center">Операции
+        </h2>
+        <ul>
+            <li v-for="user in orderedUsers">
+                {{user.name}}, {{user.age}}
+            </li>
+        </ul>
         <table>
             <thead>
             <tr>
@@ -165,13 +172,13 @@
                     Выручка от реализации товаров (работ, услуг), руб.
                 </th>
                 <th>
-                    Внереализационных доходов, руб.
+                    Внереализационные доходы, руб.
                 </th>
                 <th>
                     Основная работа
                 </th>
                 <th>
-                    Наличие права на льготы
+                    Право на льготы
                 </th>
                 <th>
                     Вдова(вдовец),
@@ -200,10 +207,51 @@
                     Результат
                 </th>
             </tr>
+            <tr>
+                <th>
+                    <input type="text" id="find_by_period" value="{{find_by_period+period}}" v-model="find_by_period"/>
+                </th>
+                <th>
 
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
             </thead>
             <tbody>
-            <template v-for="operation in operations">
+            <!--<template v-for="operation in operations | filterBy find_by_period in 'period'">-->
+                <template v-for="operation in filterOperations">
                 <tr>
                     <td v-if=" operation.period == 3">
                         Квартал
@@ -273,9 +321,49 @@
             this.$http.get("/operation").then(function(response){
                 this.operations = response.data;
             });
+
             return{
-                operations:[]
+                operations:{},
+                find_by_period:'',
+                array: [
+                    {
+                        name: 'Иван',
+                        age: 45
+                    },
+                    {
+                        name: 'Алиса',
+                        age: 322
+                    },
+                    {
+                      name: 'Вася',
+                      age: 42
+                    }
+                ]
+
+
             }
+        },
+        computed:{
+          filterOperations: function(){
+              if(this.find_by_period) {
+                  return this.operations.filter(function (operation) {
+
+                      this.find_by_period = document.getElementById("find_by_period").value;
+
+                      if(operation.period == 3 && "квартал".indexOf(this.find_by_period.toLowerCase()) != -1)
+                          return true;
+                      else if(operation.period == 6 && "полугодие".indexOf(this.find_by_period.toLowerCase()) != -1)
+                          return true;
+                      else if(operation.period == 9 && "двенадцать месяцев".toLowerCase().indexOf(this.find_by_period.toLowerCase()) != -1)
+                          return true;
+                      else if(operation.period == 12 && "год".indexOf(this.find_by_period.toLowerCase()) != -1)
+                          return true;
+                      else return false;
+
+                  })
+              } else
+                  return this.operations;
+          }
         }
     });
 
@@ -321,7 +409,6 @@
                 }
             },
             all_operations: function () {
-                alert("go");
                 this.$router.push("/operation");
             }
 
@@ -336,6 +423,7 @@
     });
 
     var app = new Vue({
+        data: {find_by_period: "a"},
         router: router
     }).$mount('#app');
 </script>
