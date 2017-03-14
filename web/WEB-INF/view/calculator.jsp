@@ -157,11 +157,6 @@
     <form>
         <h2 align="center">Операции
         </h2>
-        <ul>
-            <li v-for="user in orderedUsers">
-                {{user.name}}, {{user.age}}
-            </li>
-        </ul>
         <table>
             <thead>
             <tr>
@@ -209,48 +204,29 @@
             </tr>
             <tr>
                 <th>
-                    <input type="text" id="find_by_period" value="{{find_by_period+period}}" v-model="find_by_period"/>
+                    <input type="text" id="find_by_period" :value="find_by_period" v-model="find_by_period" style="width:15px"/>
                 </th>
+                <th></th>
+                <th></th>
                 <th>
-
+                    <select id="find_by_work" onchange="change(this)" :value="find_by_work" v-model="find_by_work" style="width:10px ;">
+                        <option selected value="-1"></option>
+                        <option value="1">да</option>
+                        <option value="0">нет</option>
+                    </select>
                 </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <!--<template v-for="operation in operations | filterBy find_by_period in 'period'">-->
                 <template v-for="operation in filterOperations">
                 <tr>
                     <td v-if=" operation.period == 3">
@@ -309,6 +285,10 @@
 
     }
 
+     function change(el) {
+        this.find_by_work = el.options[el.selectedIndex].value;
+    }
+
 </script>
 <script>
     Vue.http.options.emulateJSON = true;
@@ -325,44 +305,34 @@
             return{
                 operations:{},
                 find_by_period:'',
-                array: [
-                    {
-                        name: 'Иван',
-                        age: 45
-                    },
-                    {
-                        name: 'Алиса',
-                        age: 322
-                    },
-                    {
-                      name: 'Вася',
-                      age: 42
-                    }
-                ]
-
-
+                find_by_work:-1
             }
         },
         computed:{
+
           filterOperations: function(){
-              if(this.find_by_period) {
+          if(this.find_by_period || this.find_by_work != -1) {
                   return this.operations.filter(function (operation) {
-
                       this.find_by_period = document.getElementById("find_by_period").value;
-
-                      if(operation.period == 3 && "квартал".indexOf(this.find_by_period.toLowerCase()) != -1)
-                          return true;
-                      else if(operation.period == 6 && "полугодие".indexOf(this.find_by_period.toLowerCase()) != -1)
-                          return true;
-                      else if(operation.period == 9 && "двенадцать месяцев".toLowerCase().indexOf(this.find_by_period.toLowerCase()) != -1)
-                          return true;
-                      else if(operation.period == 12 && "год".indexOf(this.find_by_period.toLowerCase()) != -1)
+                      if (operation.period == 3 && "квартал".indexOf(this.find_by_period.toLowerCase()) != -1 ||
+                              operation.period == 6 && "полугодие".indexOf(this.find_by_period.toLowerCase()) != -1 ||
+                              operation.period == 9 && "девять месяцев".toLowerCase().indexOf(this.find_by_period.toLowerCase()) != -1 ||
+                              operation.period == 12 && "год".indexOf(this.find_by_period.toLowerCase()) != -1)
                           return true;
                       else return false;
+                  }).filter(function(operation) {
+                      this.find_by_work = document.getElementById("find_by_work").value;
+                      if(this.find_by_work == -1)
+                          return true;
+                      if(operation.job_availability == this.find_by_work )
+                          return true;
 
-                  })
-              } else
-                  return this.operations;
+                      else
+                          return false;
+                  });
+              } else {
+              return this.operations;
+          }
           }
         }
     });
